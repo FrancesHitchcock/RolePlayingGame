@@ -1,0 +1,204 @@
+/* font-family: 'Londrina Outline', cursive; */
+
+@font-face {
+    font-family: "homeChristmas";
+    src: url("Home Christmas.otf");
+}
+
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+    font-family: 'Roboto Slab', serif;
+    background-color: midnightblue;
+    background-image: url("./images/sky.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    color: white;
+    min-height: 100vh;
+}
+
+/* temp */
+
+/* h2, h3, p, .player-controls, .character, .ui-panel{
+    border: 1px solid red;
+} */
+
+.dice{
+    /* border: 1px solid red; */
+    background-color: maroon;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 1px 1px 5px lightslategray;
+}
+
+/* layout */
+
+.wrapper{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 95%;
+    max-width: 450px;
+    margin: 0 auto;
+    height: 100vh;
+    max-height: 600px;
+}
+
+.player-controls,
+.character,
+.ui-panel{
+    padding: 10px;
+    margin-bottom: 5px;
+    width: 100%;
+    max-width: 320px;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    box-shadow: 0 0 5px;
+}
+
+.character{
+    height: 260px;
+}
+
+.ui-panel{
+    height: 180px;
+}
+
+.character-container-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 30px 0 20px;
+}
+
+.energy-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.player-controls{
+    text-align: center;
+    height: 110px;
+}
+
+.player-dice-outer,
+.total-score-value,
+.player-score{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.energy-message-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: .5em;
+}
+
+.dice-total-container{
+    width: 20px;
+    height: 20px;
+    font-size: 1.125rem;
+    font-weight: bold;
+}  
+
+.ui-panel{
+    text-align: center;
+}
+
+.santa-avatar{
+    width: 100%;
+    max-width: 150px;
+    display: block;
+    margin: 0 auto;
+}
+
+.obstacle-avatar{
+    font-size: 80px;
+    margin: 0;
+    padding: 0;
+    letter-spacing: -5px;
+    line-height: 1;
+}
+
+.progress-bar{
+    height: 5px;
+    background-color: green;
+    border-radius: 5px;
+}
+
+.progress-bar-container{
+    background-color: rgba(255, 255, 255, .2);
+    border-radius: 5px;
+}
+
+
+.dice-container{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dice{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* typography */
+
+h2,
+h3,
+h4{
+    margin: 0;
+}
+
+h3{
+    margin: .5em 0;
+    font-size: 1rem;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: .25em;
+    font-size: 1.25rem;
+    font-family: "homeChristmas", cursive;
+    letter-spacing: .1em;
+    font-weight: normal;
+}
+
+/* buttons */
+
+button{
+    width: 100%;
+    padding: .125em .5em;
+    font-family: inherit;
+    font-size: 1.125rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: .2em;
+    margin-bottom: .25em;
+    background-color: chartreuse;
+    border-radius: 5px;
+}
+
+button:hover{
+    cursor: pointer;
+    background-color: greenyellow;
+}
