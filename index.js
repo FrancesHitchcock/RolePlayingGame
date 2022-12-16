@@ -3,7 +3,7 @@ import Character from "./Character.js"
 import {santaData, characterData} from "./data.js"
 import {getCharacterDiceHtml, getDiceTotal, getPercentage, getBlankDiceHtml, getNewDiceArray} from "./utils.js"
 
-const difficultyLevel = 11
+const difficultyLevel = 10
 
 const timeoutInterval = 1500
 
