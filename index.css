@@ -1,5 +1,3 @@
-/* font-family: 'Londrina Outline', cursive; */
-
 @font-face {
     font-family: "homeChristmas";
     src: url("Home Christmas.otf");
@@ -25,38 +23,52 @@ body{
     min-height: 100vh;
 }
 
-/* temp */
-
-/* h2, h3, p, .player-controls, .santa, .ui-panel{
-    border: 1px solid red;
-} */
-
-
 /* layout */
 
-.wrapper{
+.wrapper,
+.endgame-wrapper,
+.player-dice-outer,
+.total-score-value,
+.player-score{
     display:flex;
-    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+}
+
+.wrapper,
+.endgame-wrapper{
+    flex-direction: column;
+    text-align: center;
     width: 95%;
     max-width: 450px;
     margin: 0 auto;
-    /* height: 100vh; */
     height: 90vh;
+}
+
+.wrapper{
     max-height: 600px;
+}
+
+.endgame-wrapper,
+.player-controls,
+.santa,
+.ui-panel{
+    padding: 10px;
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    box-shadow: 0 0 5px;
+}
+
+.endgame-wrapper{
+    max-height: 500px; 
 }
 
 .player-controls,
 .santa,
 .ui-panel{
-    padding: 10px;
     margin-bottom: 5px;
     width: 100%;
     max-width: 320px;
-    background-color: rgba(0, 0, 0, .5);
-    border-radius: 10px;
-    box-shadow: 0 0 5px;
 }
 
 .santa{
@@ -67,18 +79,19 @@ body{
     height: 150px;
 }
 
-.character-container-inner{
+.character-container-inner,
+.energy-container{
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.character-container-inner{
     margin: 0 30px 0 20px;
 }
 
 .energy-container{
-    display: flex;
     flex-direction: column;
-    text-align: center;
-    justify-content: space-between;
 }
 
 .player-controls{
@@ -86,19 +99,31 @@ body{
     height: 100px;
 }
 
-.player-dice-outer,
-.total-score-value,
-.player-score{
-    display: flex;
-    justify-content: space-evenly;
+.energy-message-container,
+.dice-container,
+.dice{
+    display:flex;
+    justify-content: center;
     align-items: center;
 }
 
 .energy-message-container{
-    display:flex;
-    justify-content: center;
-    align-items: center;
     margin-top: .5em;
+}
+
+.dice-container{
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dice{
+    background-color: maroon;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    box-shadow: 1px 1px 5px lightslategray;
+    width: 35px;
+    height: 35px;
 }
 
 .dice-total-container{
@@ -121,12 +146,25 @@ body{
     margin: 0 auto;
 }
 
-.obstacle-avatar{
+/* .obstacle-avatar{ */
+.character-avatar{
     font-size: 60px;
     margin: 0;
     padding: 0;
     letter-spacing: -5px;
     line-height: 1;
+}
+
+.end-emoji{
+    font-size: 60px;
+    margin: 0 0 1em 0;
+    padding: 0;
+    letter-spacing: -5px;
+    line-height: 1; 
+}
+
+.instructions{
+    text-align: left;;
 }
 
 .progress-bar{
@@ -135,46 +173,30 @@ body{
     border-radius: 5px;
 }
 
+.red{
+    background-color: red;
+}
+
 .progress-bar-container{
     background-color: rgba(255, 255, 255, .2);
     border-radius: 5px;
-}
-
-
-.dice-container{
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.dice{
-    /* border: 1px solid red; */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: maroon;
-    border-radius: 5px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    box-shadow: 1px 1px 5px lightslategray;
-    width: 35px;
-    height: 35px;
 }
 
 /* typography */
 
 h3{
     margin: .5em 0;
-    /* font-size: 1rem; */
     font-size: .875rem;
+}
+
+h1 {
+    font-family: "homeChristmas", cursive;
+    font-size: 2rem;
 }
 
 h2{
     text-align: center;
-    /* margin: 0 0 .25em 0; */
     margin: 0 0 .125em 0;
-    /* font-size: 1.25rem; */
     font-size: 1.125rem;
     font-family: "homeChristmas", cursive;
     letter-spacing: .1em;
@@ -182,17 +204,25 @@ h2{
 }
 
 h4{
-    font-size: .75rem;
+    font-size: .875rem;
     margin: 0;
+}
+
+h5{
+    font-size: 1.125rem;
+}
+
+p{
+    font-size: .75rem;
+    margin: .25em;
 }
 
 /* buttons */
 
 button{
-    width: 100%;
+    width: 90%;
     padding: .125em .5em;
     font-family: inherit;
-    /* font-size: 1.125rem; */
     font-size: 1rem;
     font-weight: 900;
     text-transform: uppercase;

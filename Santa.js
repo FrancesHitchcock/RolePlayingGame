@@ -19,11 +19,9 @@ function Santa(data){
             </div>
             <h3 class="energy">Energy: ${energy}</h3>
             <div class="progress-bar-container">
-                <div class="progress-bar energy-bar" style="width:${percentEnergy}%;"></div>
+                <div class="progress-bar energy-bar ${percentEnergy < 26 ? "red" : ""}" style="width:${percentEnergy}%;"></div>
             </div>`
-            
     }
-    
 }
 
 export default Santa

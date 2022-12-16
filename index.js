@@ -3,7 +3,12 @@ import Character from "./Character.js"
 import {santaData, characterData} from "./data.js"
 import {getCharacterDiceHtml, getDiceTotal, getPercentage, getBlankDiceHtml, getNewDiceArray} from "./utils.js"
 
-const difficultyLevel = 10
+const difficultyLevel = 11
+
+const timeoutInterval = 1500
+
+const uiPanel = document.getElementById("ui-panel")
+const playButton = document.getElementById('play-btn')
 
 const hazardsArray = ["shootingStar", "bottleOfBubbly", "whiteWitch", "poisonMushroom", "grinch"]
 const helpersArray = ["bingCrosby", "mincePie", "carrot", "snowman"]
@@ -11,7 +16,7 @@ const helpersArray = ["bingCrosby", "mincePie", "carrot", "snowman"]
 let character = {}
 let playButtonOn = true
 
-document.getElementById('play-btn').addEventListener('click', play)
+playButton.addEventListener('click', play)
 
 function getNewCharacter(arr){
     const randomIndex = Math.floor(Math.random() * arr.length)
@@ -22,6 +27,7 @@ function getNewCharacter(arr){
 function play(){
     if(playButtonOn){
         playButtonOn = false
+        playButton.style.opacity = .4 
         const playerDiceArray = getNewDiceArray(2)
         const playerDiceTotal = getDiceTotal(playerDiceArray)
 
@@ -32,76 +38,74 @@ function play(){
 
         santa.distance -= 100
 
-        if(santa.distance <= 0){
-            santa.distance = 0
-        }
-
         santa.percentDistance = getPercentage(santa.fullDistance, santa.distance)
-        // character.diceHtml = getCharacterDiceHtml(character.diceArray)
         renderSanta()
 
-        setTimeout(() => {
-            renderTotalScoreValue(playerDiceTotal) 
-            renderCharacter() 
-        }, 2000)
-        
-        // renderBoard()
-        // setTimeout(() => {
-            // santa.distance -= 100
-
-            // if(santa.distance <= 0){
-            //     santa.distance = 0
-            // }
-
-            // santa.percentDistance = getPercentage(santa.fullDistance, santa.distance)
-            // character.diceHtml = getCharacterDiceHtml(character.diceArray)
-            // renderBoard()
-        // }, 2000)
-        setTimeout(() => {
-            character.diceHtml = getCharacterDiceHtml(character.diceArray)
-            character.diceTotal = getDiceTotal(character.diceArray)
-            renderCharacter()
-
-            hazardCharacter ? santa.energy -= character.diceTotal : santa.energy += character.diceTotal
-
-            if(santa.energy >= 60){
-                santa.energy = 60
-            }
-            else if(santa.energy <= 0){
-                santa.energy = 0
-            }
-
-            santa.percentEnergy = getPercentage(santa.fullEnergy, santa.energy)
-            // renderBoard()
-            renderSanta()
-            renderTotalScoreValue("")
-            renderPlayerDice(getBlankDiceHtml(2))
-
+        if(santa.distance <= 0){
+            santa.distance = 0
+            endGame()
+        }
+        else{
+            setTimeout(() => {
+                renderTotalScoreValue(playerDiceTotal) 
+            }, timeoutInterval * 1)
+    
+            setTimeout(() => {
+                character.diceHtml = getBlankDiceHtml(character.numberOfDice) 
+                renderCharacter()
+                uiPanel.style.opacity = 1 
+            }, timeoutInterval * 2)
+    
+            setTimeout(()=> {
+                character.diceHtml = getCharacterDiceHtml(character.diceArray)
+                renderCharacter()
+            }, timeoutInterval * 3)
+    
+            setTimeout(() => {
+                character.diceTotal = getDiceTotal(character.diceArray)
+                renderCharacter()
+            }, timeoutInterval * 4)
+                
+            setTimeout(() => {
+                hazardCharacter ? santa.energy -= character.diceTotal : santa.energy += character.diceTotal
+    
+                if(santa.energy >= 60){
+                    santa.energy = 60
+                }
+                else if(santa.energy <= 0){
+                    santa.energy = 0
+                }
+    
+                santa.percentEnergy = getPercentage(santa.fullEnergy, santa.energy)
+                renderSanta()
+            }, timeoutInterval * 5)
             
+            setTimeout(() =>{
+                uiPanel.style.opacity = .4
 
-            playButtonOn = true
-        }, 3000)
+                renderTotalScoreValue("")
+                renderPlayerDice(getBlankDiceHtml(2))
 
-        setTimeout(() => {
-            if(santa.energy === 0 || santa.distance === 0){
-                endGame()
-            }
-        }, 4000)
+                if(santa.energy === 0){
+                    endGame()
+                }
+                else{
+                    playButtonOn = true
+                    playButton.style.opacity = 1 
+                }
+
+            }, timeoutInterval * 6)           
+        }
     }
 }
 
 function renderCharacter(){
-    // document.getElementById("santa").innerHTML = santa.getTravellerHtml()
     document.getElementById("ui-panel").innerHTML = character.getCharacterHtml()
 }
 
 function renderSanta(){
     document.getElementById("santa").innerHTML = santa.getSantaHtml()
 }
-
-// function renderInstructions(){
-//     document.getElementById("santa").innerHTML = santa.getTravellerHtml()
-// }
 
 function renderPlayerDice(playerDice){
     document.getElementById("player-dice-inner").innerHTML = `<div class="dice-container">${playerDice}</div>`
@@ -112,33 +116,32 @@ function renderTotalScoreValue(totalScore){
 }
 
 function endGame() {
+    setTimeout(() => {
+        const endMessage = santa.energy === 0 ?
+            `Santa has run out of energy, so presents will be late this year!` : 
+            `Santa has completed his journey and delivered his presents!`
 
-    const endMessage = santa.energy === 0 ?
-        `Santa has run out of energy, and presents will be late this year!` :
-        `Santa has completed his journey and delivered his presents!` 
-        
-
-    const endEmoji = santa.energy === 0 ?
-        `🎄` :
-        `🎁`  
-        
-    document.body.innerHTML = `
-        <div class="endgame-wrapper">
-            <h2>Game Over</h2>
-            <p>${endMessage}</p>
-            <p>${endEmoji}</p>
-            <button type="button" id="play-again-button">Play again</button>
-        </div>
-    `
-    document.getElementById("play-again-button").addEventListener('click', () => {
-        location.reload()
-    })
+        const endEmoji = santa.energy === 0 ?
+            `🎄` :
+            `🎁` 
+            
+        document.body.innerHTML = `
+            <div class="endgame-wrapper">
+                <h1>Game Over</h1>
+                <h5>${endMessage}</h5>
+                <div class="end-emoji">${endEmoji}</div>
+                <button type="button" id="play-again-button">Play again</button>
+            </div>
+        `
+        document.getElementById("play-again-button").addEventListener('click', () => {
+            location.reload()
+        })
+    }, 1000)
 }
 
 const santa = new Santa(santaData.santa)
 
 
-// renderInstructions()
 renderSanta()
 renderPlayerDice(getBlankDiceHtml(2))
 

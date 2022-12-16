@@ -41,7 +41,6 @@ const characterData = {
         message: "Rudolph gets stomach ache!",
         numberOfDice: 2,
     },
-
     grinch: {
         name: "Grinch",
         type: "Hazard",
@@ -50,7 +49,6 @@ const characterData = {
         message: "manages to steal a present!",
         numberOfDice: 2,
     },
-
     bingCrosby: {
         name: "Bing Crosby",
         type: "Helper",
@@ -75,7 +73,6 @@ const characterData = {
         message: "The reindeer are delighted!",
         numberOfDice: 3,
     },
-
     snowman: {
         name: "Snowman",
         type: "Helper",
@@ -85,6 +82,5 @@ const characterData = {
         numberOfDice: 1,
     },
 }
-
 
 export {santaData, characterData}
