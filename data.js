@@ -1,14 +1,15 @@
-const santaData = {
+const heroData = {
     santa: {
         name: "Santa",
         heading: "Merry Christmas!",
         avatar: "images/santa-moving.gif",
+        alt: "Cartoon of Santa in sleigh drawn by reindeer",
         distance: 1000,
         energy: 60,
     },
 }
 
-const characterData = {
+const encounterData = {
     shootingStar: {
         name: "Shooting star",
         type: "Hazard",
@@ -83,4 +84,4 @@ const characterData = {
     },
 }
 
-export {santaData, characterData}
+export {heroData, encounterData}

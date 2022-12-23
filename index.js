@@ -1,150 +1,145 @@
-import Santa from "./Santa.js"
-import Character from "./Character.js"
-import {santaData, characterData} from "./data.js"
-import {getCharacterDiceHtml, getDiceTotal, getPercentage, getBlankDiceHtml, getNewDiceArray} from "./utils.js"
+import {heroData, encounterData} from "./data.js"
+import Encounter from "./Encounter.js"
+import Hero from "./Hero.js"
+import { getDiceSetRoll, getBlankPlayerDice, getPercentage } from "./utils.js"
 
-const difficultyLevel = 10
-
-const timeoutInterval = 1500
-
-const uiPanel = document.getElementById("ui-panel")
-const playButton = document.getElementById('play-btn')
+const numberOfPlayerDice = 2
+const playerDiceIdRoot = "player-dice-"
 
 const hazardsArray = ["shootingStar", "bottleOfBubbly", "whiteWitch", "poisonMushroom", "grinch"]
 const helpersArray = ["bingCrosby", "mincePie", "carrot", "snowman"]
 
-let character = {}
-let playButtonOn = true
+const rollPlayerDiceBtn = document.getElementById("roll-player-dice-btn")
+const gameContainer = document.getElementById("game-container")
+const instructionsContainer = document.getElementById("instructions-container")
+const endgameContainer = document.getElementById("endgame-container")
+const encounterPanel = document.getElementById("encounter-panel")
 
-playButton.addEventListener('click', play)
+let rollButtonOn = true
+let encounter = {}
 
-function getNewCharacter(arr){
-    const randomIndex = Math.floor(Math.random() * arr.length)
-    const arrayItem = arr[randomIndex]
-    return new Character(characterData[arrayItem])
-}
+let energyValue = 0
 
-function play(){
-    if(playButtonOn){
-        playButtonOn = false
-        playButton.style.opacity = .4 
-        const playerDiceArray = getNewDiceArray(2)
-        const playerDiceTotal = getDiceTotal(playerDiceArray)
+rollPlayerDiceBtn.addEventListener("click", rollDice)
+document.getElementById("play-button"),addEventListener("click", startGame)
 
-        const hazardCharacter = playerDiceTotal > difficultyLevel ? false : true
-        character = hazardCharacter ? getNewCharacter(hazardsArray) : getNewCharacter(helpersArray)
+function rollDice(){
 
-        renderPlayerDice(getCharacterDiceHtml(playerDiceArray))
+    if(rollButtonOn){
+        rollButtonOn = false
 
         santa.distance -= 100
-
+        if(santa.distance <= 0){
+            santa.distance = 0
+        }
         santa.percentDistance = getPercentage(santa.fullDistance, santa.distance)
         renderSanta()
 
-        if(santa.distance <= 0){
-            santa.distance = 0
+        if (santa.distance === 0){
             endGame()
         }
         else{
+
+            rollPlayerDiceBtn.classList.add("semi-opaque")
+
+            document.getElementById("player-total").innerHTML = ``
+            
+            const playerDiceTotal = getDiceSetRoll(numberOfPlayerDice, playerDiceIdRoot)
+
+            encounter = playerDiceTotal <= 10 ? getNewEncounter(hazardsArray) : getNewEncounter(helpersArray)
+
             setTimeout(() => {
-                renderTotalScoreValue(playerDiceTotal) 
-            }, timeoutInterval * 1)
-    
+                document.getElementById("player-total").innerHTML = `<div>${playerDiceTotal}</div>`
+            }, 1500)
+
             setTimeout(() => {
-                character.diceHtml = getBlankDiceHtml(character.numberOfDice) 
-                renderCharacter()
-                uiPanel.style.opacity = 1 
-            }, timeoutInterval * 2)
-    
-            setTimeout(()=> {
-                character.diceHtml = getCharacterDiceHtml(character.diceArray)
-                renderCharacter()
-            }, timeoutInterval * 3)
-    
-            setTimeout(() => {
-                character.diceTotal = getDiceTotal(character.diceArray)
-                renderCharacter()
-            }, timeoutInterval * 4)
+                encounterPanel.classList.remove("semi-opaque")
+                energyValue = renderEncounter()
                 
+            }, 2500)
+
             setTimeout(() => {
-                hazardCharacter ? santa.energy -= character.diceTotal : santa.energy += character.diceTotal
-    
-                if(santa.energy >= 60){
+                document.getElementById("energy-total-container").textContent = energyValue
+                
+            }, 4000)
+
+            setTimeout(() => {
+
+                encounter.type === "Hazard" ? santa.energy -= energyValue : santa.energy += energyValue
+                if (santa.energy >= 60){
                     santa.energy = 60
                 }
-                else if(santa.energy <= 0){
+                else if (santa.energy <= 0){
                     santa.energy = 0
                 }
-    
-                santa.percentEnergy = getPercentage(santa.fullEnergy, santa.energy)
-                renderSanta()
-            }, timeoutInterval * 5)
-            
-            setTimeout(() =>{
-                uiPanel.style.opacity = .4
-
-                renderTotalScoreValue("")
-                renderPlayerDice(getBlankDiceHtml(2))
 
                 if(santa.energy === 0){
                     endGame()
                 }
                 else{
-                    playButtonOn = true
-                    playButton.style.opacity = 1 
+                    santa.percentEnergy = getPercentage(santa.fullEnergy, santa.energy)
+                    renderSanta()
+                    encounterPanel.classList.add("semi-opaque")
+                    rollButtonOn = true
+                    rollPlayerDiceBtn.classList.remove("semi-opaque")
+                    getBlankPlayerDice()
                 }
-
-            }, timeoutInterval * 6)           
+            }, 5000)    
         }
     }
 }
 
-function renderCharacter(){
-    document.getElementById("ui-panel").innerHTML = character.getCharacterHtml()
+function startGame(){
+    instructionsContainer.classList.add("hidden")
+    instructionsContainer.classList.remove("flex")
+    gameContainer.classList.add("flex")
+    gameContainer.classList.remove("hidden")
 }
 
 function renderSanta(){
-    document.getElementById("santa").innerHTML = santa.getSantaHtml()
+    document.getElementById("hero-panel").innerHTML = santa.getHeroHtml()
 }
 
-function renderPlayerDice(playerDice){
-    document.getElementById("player-dice-inner").innerHTML = `<div class="dice-container">${playerDice}</div>`
+function getNewEncounter(arr){
+    const randomIndex = Math.floor(Math.random() * arr.length)
+    const arrayItem = arr[randomIndex]
+    return new Encounter(encounterData[arrayItem])
 }
 
-function renderTotalScoreValue(totalScore){
-    document.getElementById("total-score-value").innerHTML = `<span>${totalScore}</span>`
+function renderEncounter(){
+    document.getElementById("encounter-panel").innerHTML = encounter.getEncounterHtml()
+    return getDiceSetRoll(encounter.numberOfDice, encounter.encounterDiceIdRoot)
 }
 
-function endGame() {
+function endGame(){
     setTimeout(() => {
-        const endMessage = santa.energy === 0 ?
-            `Santa has run out of energy, so presents will be late this year!` : 
-            `Santa has completed his journey and delivered his presents!`
-
-        const endEmoji = santa.energy === 0 ?
-            `🎄` :
-            `🎁` 
+        const endMessage = santa.distance === 0 ?
+            `Yippee, Santa has completed his journey and delivered his presents!` :
+            `Sorry kids, Santa has run out of energy, so presents will be late this year!` 
             
-        document.body.innerHTML = `
-            <div class="endgame-wrapper">
-                <h1>Game Over</h1>
-                <h5>${endMessage}</h5>
+        const endEmoji = santa.distance === 0 ?
+            `🎁` :
+            `🎄`
+             
+        document.getElementById("endgame-container").innerHTML = `
+            <div class="panel endgame-panel">
+                <h2>Game over!</h2>
+                <h3>${endMessage}</h3>
                 <div class="end-emoji">${endEmoji}</div>
-                <button type="button" id="play-again-button">Play again</button>
-            </div>
-        `
-        document.getElementById("play-again-button").addEventListener('click', () => {
+                <button type="button" id="play-again-btn">Play again</button>
+            </div>`   
+
+        endgameContainer.classList.add("flex")
+        endgameContainer.classList.remove("hidden")
+
+        gameContainer.classList.add("hidden")
+        gameContainer.classList.remove("flex")
+
+        document.getElementById("play-again-btn").addEventListener("click", () => {
             location.reload()
         })
-    }, 1000)
+    }, 800)
 }
 
-const santa = new Santa(santaData.santa)
-
-
+const santa = new Hero(heroData.santa)
 renderSanta()
-renderPlayerDice(getBlankDiceHtml(2))
-
-
-
-

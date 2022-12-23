@@ -11,30 +11,57 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <div class="wrapper">
-        <div id="santa" class="santa"></div>
 
-        <div id="ui-panel" class="ui-panel">
-            <div class="instructions" id="instructions">
-                <p>Santa is on his journey to deliver presents. Every hundred miles he meets a character.</p>
-                <p>Click the button to roll the dice. If the total is 10 or less the character is a hazard and Santa's energy is reduced. If more than 10 he meets a helper and his energy is increased.</p>
-                <p>Can Santa get there before he runs out of energy?</p>
+        <div class="container game-container hidden" id="game-container">
+            <div class="panel hero-panel" id="hero-panel">
+                <!-- Santa renders here -->
             </div>
-        </div>
-
-        <div class="player-controls">
-            <button type="button" id="play-btn">roll dice</button>
-            <div class="player-dice-outer">
-                <div class="player-dice-inner" id="player-dice-inner"></div>
-                <div class="player-score">
-                    <div class="total-score-text">
-                        <h4>Total score:</h4>
+    
+            <div class="panel encounter-panel" id="encounter-panel">
+                <h2>Who will Santa meet first?</h2>
+            </div>
+    
+            <div class="panel ui-panel">
+                <button type="button" id="roll-player-dice-btn">roll dice</button> 
+                <div class="player-total-container">
+                    <div class="dice-container" id="player-dice-container">
+                        <div class="dice" id="player-dice-1"></div>
+                        <div class="dice" id="player-dice-2"></div>
                     </div>
-                    <div class="total-score-value dice-total-container" id="total-score-value"></div>
-                </div>
+                    <div class="total-score-container">
+                        <h4>Total score:</h4> <div class="dice-total-container" id="player-total"></div>
+                    </div>
+                </div>   
+            </div>
+    
+    
+    
+        </div>
+    
+        <div class="container instructions-container flex" id="instructions-container">
+            <div class="panel instructions-panel">
+                <h1>Hazards and Helpers</h1>
+                <h2>A festive game of chance</h2>
+                <p>Can you help Santa on his journey to deliver his presents on Christmas Eve? He has 1000 miles to travel.</p>
+                <p>Roll the dice and Santa will move on 100 miles. If your dice roll totals more than 10 he will meet a helper, who will boost Santa's energy. If your dice roll totals 10 or less then he will encounter a hazard who will reduce his energy.</p>
+                <p>Beware that Santa's maximum energy level is 60.</p>
+                <p>Will Santa reach the children's stockings before he runs out of energy?</p>
+                <p>Press the PLAY button to start the game.</p>
+                <button type="button" id="play-button">Play</button>
+
             </div>
         </div>
+
+        <div class="container endgame-container hidden" id="endgame-container">
+            <!-- endGame text renders here -->
+        </div>
+
     </div>
+
+
+
     <script src="index.js" type="module"></script>
 </body>
 </html>

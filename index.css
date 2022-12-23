@@ -18,105 +18,152 @@ body{
     background-image: url("./images/sky.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: bottom center;
+    background-position: center;    
     color: white;
     min-height: 100vh;
 }
 
 /* layout */
 
-.wrapper,
-.endgame-wrapper,
-.player-dice-outer,
-.total-score-value,
-.player-score{
-    display:flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.wrapper,
-.endgame-wrapper{
-    flex-direction: column;
-    text-align: center;
+.wrapper{
     width: 95%;
     max-width: 450px;
     margin: 0 auto;
+}
+
+.container{
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly; 
     height: 90vh;
+    max-height: 500px;
+    width: 100%;
 }
 
-.wrapper{
-    max-height: 600px;
+img{
+    display: block;
+    margin: 0 auto;
+    /* width: 50%; */
+    max-width: 130px;
 }
 
-.endgame-wrapper,
-.player-controls,
-.santa,
-.ui-panel{
-    padding: 10px;
-    background-color: rgba(0, 0, 0, .5);
-    border-radius: 10px;
-    box-shadow: 0 0 5px;
+.bar-container{
+    width: 100%;
+    background-color: rgba(255, 255, 255, .2);
+    border-radius: 5px;
 }
 
-.endgame-wrapper{
-    max-height: 500px; 
+.bar{
+    width: 100%;
+    background-color: lime;
+    height: 5px;
+    border-radius: 5px;
 }
 
-.player-controls,
-.santa,
-.ui-panel{
-    margin-bottom: 5px;
+.panel{
     width: 100%;
     max-width: 320px;
+    padding: 15px; 
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 10px;
+    box-shadow: 0 0 5px;  
 }
 
-.santa{
-    height: 220px;
+.hero-panel{
+    height: 200px;
 }
 
-.ui-panel{
+.energy-container,
+.ui-panel,
+.endgame-panel,
+.encounter-panel{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.energy-container,
+.ui-panel,
+.endgame-panel{
+    justify-content: center;
+}
+
+.encounter-panel{
+    justify-content: space-evenly;
     height: 150px;
 }
 
-.character-container-inner,
-.energy-container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.character-container-inner{
-    margin: 0 30px 0 20px;
-}
-
-.energy-container{
-    flex-direction: column;
-}
-
-.player-controls{
-    text-align: center;
+.ui-panel{
     height: 100px;
 }
 
+.emoji-container,
+.end-emoji{
+    font-size: 4rem;
+    line-height: 1;
+    padding-bottom: .1em;
+}
+
+.emoji-container{
+    margin: 0;
+}
+
+.end-emoji{
+    margin: .25em 0 .5em 0;
+}
+
 .energy-message-container,
-.dice-container,
-.dice{
-    display:flex;
-    justify-content: center;
+.total-score-container,
+.dice-container{
+    display: flex;
     align-items: center;
+    justify-content: center;
+}
+
+.total-score-container{
+    margin-top: .5em;
 }
 
 .energy-message-container{
+    width: 100%;
     margin-top: .5em;
 }
 
 .dice-container{
-    gap: 10px;
-    margin-top: 10px;
+    gap: .75em;
+}
+
+.dice-total-container{
+    font-size: 1.25rem;
+    font-weight: 700;
+    width: 1.5em;
+    height: 1.5em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.player-total-container,
+.encounter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.player-total-container{
+    width: 100%;
+    max-width: 230px;
+}
+
+.encounter{
+    width: 100%;
+    max-width: 230px;
 }
 
 .dice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: maroon;
     border-radius: 5px;
     font-size: 1.5rem;
@@ -126,108 +173,76 @@ body{
     height: 35px;
 }
 
-.dice-total-container{
-    width: 20px;
-    height: 20px;
-    font-size: 1.125rem;
-    font-weight: bold;
-    margin: 0 0 0 5px;
-    line-height: 1;
-}  
-
-.ui-panel{
-    text-align: center;
-}
-
-.santa-avatar{
-    width: 100%;
-    max-width: 150px;
-    display: block;
-    margin: 0 auto;
-}
-
-/* .obstacle-avatar{ */
-.character-avatar{
-    font-size: 60px;
-    margin: 0;
-    padding: 0;
-    letter-spacing: -5px;
-    line-height: 1;
-}
-
-.end-emoji{
-    font-size: 60px;
-    margin: 0 0 1em 0;
-    padding: 0;
-    letter-spacing: -5px;
-    line-height: 1; 
-}
-
-.instructions{
-    text-align: left;;
-}
-
-.progress-bar{
-    height: 5px;
-    background-color: green;
-    border-radius: 5px;
-}
-
-.red{
-    background-color: red;
-}
-
-.progress-bar-container{
-    background-color: rgba(255, 255, 255, .2);
-    border-radius: 5px;
-}
-
 /* typography */
+
+h1{
+    text-align: center;
+    font-family: "homeChristmas", cursive;
+    letter-spacing: .1em;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+h2{
+    text-align: center;
+    margin: 0 0 .25em 0;
+    font-size: 1rem;
+    font-family: "homeChristmas", cursive;
+    letter-spacing: .1em;
+    font-weight: normal;
+}
 
 h3{
     margin: .5em 0;
     font-size: .875rem;
 }
 
-h1 {
-    font-family: "homeChristmas", cursive;
-    font-size: 2rem;
-}
-
-h2{
-    text-align: center;
-    margin: 0 0 .125em 0;
-    font-size: 1.125rem;
-    font-family: "homeChristmas", cursive;
-    letter-spacing: .1em;
-    font-weight: normal;
-}
-
 h4{
-    font-size: .875rem;
     margin: 0;
-}
-
-h5{
-    font-size: 1.125rem;
+    font-size: .875rem;
 }
 
 p{
     font-size: .75rem;
-    margin: .25em;
+    margin: .6em 0 0 0;
+}
+
+p:last-of-type{
+    margin-bottom: 1em;
+}
+p:first-of-type{
+    margin-top: 1em;
+}
+
+/* utility */
+
+.flex{
+    display: flex;
+}
+
+.hidden{
+    display: none;
+}
+
+.semi-opaque{
+    opacity: .4;
+}
+
+.red{
+    background-color: red;
 }
 
 /* buttons */
 
 button{
-    width: 90%;
+    width: 100%;
     padding: .125em .5em;
     font-family: inherit;
     font-size: 1rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: .2em;
-    margin-bottom: .25em;
+    margin-bottom: 1em;
     background-color: chartreuse;
     border-radius: 5px;
 }
@@ -235,4 +250,8 @@ button{
 button:hover{
     cursor: pointer;
     background-color: greenyellow;
+}
+
+button:hover.semi-opaque{
+    background-color: chartreuse;
 }
